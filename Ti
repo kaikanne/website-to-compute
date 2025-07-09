@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gacha Lật Thẻ - Anime Chiến Đấu</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #0f0f0f;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #ff4081;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      grid-gap: 15px;
+      margin-bottom: 20px;
+    }
+    .card {
+      width: 100px;
+      height: 140px;
+      background: #222;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid #555;
+      transition: 0.3s;
+    }
+    .card:hover {
+      border-color: #ff4081;
+    }
+    .revealed {
+      background-color: #1e1e1e;
+      flex-direction: column;
+      font-size: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+    .rarity-1 { color: white; }
+    .rarity-2 { color: cyan; }
+    .rarity-3 { color: gold; font-weight: bold; }
+    button {
+      padding: 10px 20px;
+      background: #ff4081;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ff79a8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gacha Lật Thẻ - Anime Chiến Đấu</h1>
+  <div class="grid" id="cardGrid"></div>
+  <button onclick="resetGame()">Chơi Lại</button>  <script>
+    const characters = [
+      { name: "Naruto", rarity: 3 },
+      { name: "Sasuke", rarity: 2 },
+      { name: "Goku", rarity: 3 },
+      { name: "Luffy", rarity: 2 },
+      { name: "Ichigo", rarity: 2 },
+      { name: "Tanjiro", rarity: 1 },
+      { name: "Zenitsu", rarity: 1 },
+      { name: "Asta", rarity: 2 },
+      { name: "Eren", rarity: 3 },
+      { name: "Levi", rarity: 2 },
+      { name: "Gojo", rarity: 3 },
+      { name: "Megumi", rarity: 1 }
+    ];
+
+    const grid = document.getElementById("cardGrid");
+
+    function createCard(index) {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.textContent = "?";
+      card.onclick = () => revealCard(card, index);
+      return card;
+    }
+
+    function revealCard(card, index) {
+      const char = characters[index];
+      card.classList.add("revealed");
+      card.innerHTML = `<div class='rarity-${char.rarity}'>${char.name}<br/>${"⭐".repeat(char.rarity)}</div>`;
+      card.onclick = null;
+    }
+
+    function resetGame() {
+      grid.innerHTML = "";
+      const shuffled = [...characters].sort(() => 0.5 - Math.random());
+      for (let i = 0; i < 12; i++) {
+        const card = createCard(i);
+        grid.appendChild(card);
+      }
+    }
+
+    resetGame();
+  </script></body>
+</html>
